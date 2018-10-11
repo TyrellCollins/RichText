@@ -66,80 +66,90 @@ namespace RichTextDemoVersion3
                 }
             }
         }
-    
-    private async void SaveButton_Click(object sender, RoutedEventArgs e)
-    {
-        Windows.Storage.Pickers.FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
-        savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
 
-        // Dropdown of file types the user can save the file as
-        savePicker.FileTypeChoices.Add("Rich Text", new List<string>() { ".rtf" });
-
-        // Default file name if the user does not type one in or select a file to replace
-        savePicker.SuggestedFileName = "New Document";
-
-        Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
-        if (file != null)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Prevent updates to the remote version of the file until we 
-            // finish making changes and call CompleteUpdatesAsync.
-            Windows.Storage.CachedFileManager.DeferUpdates(file);
-            // write to file
-            Windows.Storage.Streams.IRandomAccessStream randAccStream =
-                await file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+            Windows.Storage.Pickers.FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
 
-            editor.Document.SaveToStream(Windows.UI.Text.TextGetOptions.FormatRtf, randAccStream);
+            // Dropdown of file types the user can save the file as
+            savePicker.FileTypeChoices.Add("Rich Text", new List<string>() { ".rtf" });
 
-            // Let Windows know that we're finished changing the file so the 
-            // other app can update the remote version of the file.
-            Windows.Storage.Provider.FileUpdateStatus status = await Windows.Storage.CachedFileManager.CompleteUpdatesAsync(file);
-            if (status != Windows.Storage.Provider.FileUpdateStatus.Complete)
+            // Default file name if the user does not type one in or select a file to replace
+            savePicker.SuggestedFileName = "New Document";
+
+            Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
+            if (file != null)
             {
-                Windows.UI.Popups.MessageDialog errorBox =
-                    new Windows.UI.Popups.MessageDialog("File " + file.Name + " couldn't be saved.");
-                await errorBox.ShowAsync();
+                // Prevent updates to the remote version of the file until we 
+                // finish making changes and call CompleteUpdatesAsync.
+                Windows.Storage.CachedFileManager.DeferUpdates(file);
+                // write to file
+                Windows.Storage.Streams.IRandomAccessStream randAccStream =
+                    await file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+
+                editor.Document.SaveToStream(Windows.UI.Text.TextGetOptions.FormatRtf, randAccStream);
+
+                // Let Windows know that we're finished changing the file so the 
+                // other app can update the remote version of the file.
+                Windows.Storage.Provider.FileUpdateStatus status = await Windows.Storage.CachedFileManager.CompleteUpdatesAsync(file);
+                if (status != Windows.Storage.Provider.FileUpdateStatus.Complete)
+                {
+                    Windows.UI.Popups.MessageDialog errorBox =
+                        new Windows.UI.Popups.MessageDialog("File " + file.Name + " couldn't be saved.");
+                    await errorBox.ShowAsync();
+                }
             }
         }
-    }
 
-    private void BoldButton_Click(object sender, RoutedEventArgs e)
-    {
-        Windows.UI.Text.ITextSelection selectedText = editor.Document.Selection;
-        if (selectedText != null)
+        private void BoldButton_Click(object sender, RoutedEventArgs e)
         {
-            Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-            charFormatting.Bold = Windows.UI.Text.FormatEffect.Toggle;
-            selectedText.CharacterFormat = charFormatting;
-        }
-    }
-
-    private void ItalicButton_Click(object sender, RoutedEventArgs e)
-    {
-        Windows.UI.Text.ITextSelection selectedText = editor.Document.Selection;
-        if (selectedText != null)
-        {
-            Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-            charFormatting.Italic = Windows.UI.Text.FormatEffect.Toggle;
-            selectedText.CharacterFormat = charFormatting;
-        }
-    }
-
-    private void UnderlineButton_Click(object sender, RoutedEventArgs e)
-    {
-        Windows.UI.Text.ITextSelection selectedText = editor.Document.Selection;
-        if (selectedText != null)
-        {
-            Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
-            if (charFormatting.Underline == Windows.UI.Text.UnderlineType.None)
+            Windows.UI.Text.ITextSelection selectedText = editor.Document.Selection;
+            if (selectedText != null)
             {
-                charFormatting.Underline = Windows.UI.Text.UnderlineType.Single;
+                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
+                charFormatting.Bold = Windows.UI.Text.FormatEffect.Toggle;
+                selectedText.CharacterFormat = charFormatting;
             }
-            else
+        }
+
+        private void ItalicButton_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.UI.Text.ITextSelection selectedText = editor.Document.Selection;
+            if (selectedText != null)
             {
-                charFormatting.Underline = Windows.UI.Text.UnderlineType.None;
+                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
+                charFormatting.Italic = Windows.UI.Text.FormatEffect.Toggle;
+                selectedText.CharacterFormat = charFormatting;
             }
-            selectedText.CharacterFormat = charFormatting;
+        }
+
+        private void UnderlineButton_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.UI.Text.ITextSelection selectedText = editor.Document.Selection;
+            if (selectedText != null)
+            {
+                Windows.UI.Text.ITextCharacterFormat charFormatting = selectedText.CharacterFormat;
+                if (charFormatting.Underline == Windows.UI.Text.UnderlineType.None)
+                {
+                    charFormatting.Underline = Windows.UI.Text.UnderlineType.Single;
+                }
+                else
+                {
+                    charFormatting.Underline = Windows.UI.Text.UnderlineType.None;
+                }
+                selectedText.CharacterFormat = charFormatting;
+            }
+        }
+
+        private void richEditBox_TextChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void editor_TextChanged(object sender, RoutedEventArgs e)
+        {
+
         }
     }
-
-
+}

@@ -9,30 +9,30 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock x:Name="Word" HorizontalAlignment="Left" Margin="0,10,0,0" Text="RichTextDemo" TextWrapping="Wrap" VerticalAlignment="Top" Height="705" Width="1274"/>
-        <RichEditBox x:Name="richEditBox" Header="File IO" Margin="180,0,250,0"/>
-        <RelativePanel Margin="20" HorizontalAlignment="Stretch">
+
+        <RichEditBox x:Name="richEditBox" Header="Word" Margin="180,40,250,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextChanged="richEditBox_TextChanged"/>
+        <RelativePanel Margin="60,58,288,10" HorizontalAlignment="Stretch">
             <RelativePanel.Resources>
                 <Style TargetType="AppBarButton">
                     <Setter Property="IsCompact" Value="True"/>
                 </Style>
             </RelativePanel.Resources>
             <AppBarButton x:Name="openFileButton" Icon="OpenFile" 
-                   Click="OpenButton_Click" ToolTipService.ToolTip="Open file"/>
+                   Click="OpenButton_Click" ToolTipService.ToolTip="Open file" HorizontalAlignment="Left" Margin="163,0,0,0" VerticalAlignment="Center"/>
             <AppBarButton Icon="Save" Click="SaveButton_Click" 
                    ToolTipService.ToolTip="Save file" 
-                   RelativePanel.RightOf="openFileButton" Margin="8,0,0,0"/>
+                   RelativePanel.RightOf="openFileButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="163,0,0,0"/>
 
             <AppBarButton Icon="Bold" Click="BoldButton_Click" ToolTipService.ToolTip="Bold" 
-                   RelativePanel.LeftOf="italicButton" Margin="0,0,8,0"/>
+                   RelativePanel.LeftOf="italicButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="68,0,0,0"/>
             <AppBarButton x:Name="italicButton" Icon="Italic" Click="ItalicButton_Click" 
-                   ToolTipService.ToolTip="Italic" RelativePanel.LeftOf="underlineButton" Margin="0,0,8,0"/>
+                   ToolTipService.ToolTip="Italic" RelativePanel.LeftOf="underlineButton" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="68,0,0,0"/>
             <AppBarButton x:Name="underlineButton" Icon="Underline" Click="UnderlineButton_Click" 
-                   ToolTipService.ToolTip="Underline" RelativePanel.AlignRightWithPanel="True"/>
+                   ToolTipService.ToolTip="Underline" RelativePanel.AlignRightWithPanel="True" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="68,0,0,0"/>
 
 
-            <RichEditBox x:Name="editor" Height="200" RelativePanel.Below="openFileButton" 
-                  RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True"/>
+            <RichEditBox x:Name="editor" RelativePanel.Below="openFileButton" 
+                  RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" Margin="125,0,0,-877" TextChanged="editor_TextChanged"/>
         </RelativePanel>
     </Grid>
 </Page>
