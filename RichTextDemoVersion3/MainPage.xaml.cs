@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using static System.Net.Mime.MediaTypeNames;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -25,10 +26,10 @@ namespace RichTextDemoVersion3
 
     public sealed partial class MainPage : Page
     {
+
         public MainPage()
         {
             this.InitializeComponent();
-            richEditBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, "This is some sample text");
         }
         //}
 
@@ -150,6 +151,26 @@ namespace RichTextDemoVersion3
         private void editor_TextChanged(object sender, RoutedEventArgs e)
         {
 
+        }
+
+     
+
+        private void buttonWayne_Click(object sender, RoutedEventArgs e)
+        {
+            int waynevariable = 0;
+            //hide on click event hide text box that finds "ifoundyou.jpg"
+
+            if(waynevariable == 1)
+            {
+                wayne.Visibility = Visibility.Visible; //Hi wayne
+                waynevariable = 0;
+            }
+
+            if (waynevariable == 0)
+            {
+                wayne.Visibility = Visibility.Collapsed; //bye wayne
+                waynevariable = 1;
+            }
         }
     }
 }
